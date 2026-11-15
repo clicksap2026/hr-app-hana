@@ -1,22 +1,48 @@
-# Getting Started
+# P5 HR App on SAP HANA Cloud
 
-Welcome to your new CAP project.
+Project P5 of the clickERP live SAP CAP course (Units 7 and 8).
 
-It contains these folders and files, following our recommended project layout:
+A small HR app: employees and leave requests, with three roles.
 
-File or Folder | Purpose
----------|----------
-`app/` | content for UI frontends goes here
-`db/` | your domain models and data go here
-`srv/` | your service models and code go here
-`readme.md` | this getting started guide
+| User  | Password | Roles              | Can do                                   |
+| ----- | -------- | ------------------ | ---------------------------------------- |
+| alice | alice    | Employee           | See and create her own leave requests    |
+| bob   | bob      | Employee, Manager  | See everything, approve and reject       |
+| carol | carol    | HRAdmin            | See and change everything                |
 
-## Next Steps
+## Branches
 
-- Open a new terminal and run `cds watch`
-- (in VS Code simply choose _**Terminal** > Run Task > cds watch_)
-- Start with your domain model, in a CDS file in `db/`
+| Branch  | What it holds |
+| ------- | ------------- |
+| `start` | The app on SQLite, with roles, validation and actions. Start Unit 8 here. |
+| `end`   | The same app ready for SAP HANA Cloud (`cds add hana`), plus `db/explore.sql`. |
 
-## Learn More
+## Run it on SQLite
 
-Learn more at <https://cap.cloud.sap>.
+```bash
+npm install
+cds watch
+```
+
+Then open `test.http` and send the requests.
+
+## Run it on SAP HANA Cloud
+
+You need a running SAP HANA Cloud instance in your BTP trial, and a Cloud Foundry login in BAS.
+
+```bash
+cds add hana
+npm install
+cds deploy --to hana
+cds watch --profile hybrid
+```
+
+`cds deploy --to hana` creates an HDI container called `hr-app-hana-db`, loads the tables and data,
+and saves the connection in `.cdsrc-private.json`. That file is not in Git, so after a fresh clone run:
+
+```bash
+cds bind -2 hr-app-hana-db
+cds watch --profile hybrid
+```
+
+Want live, instructor-led SAP training? Request a live session here: https://forms.gle/ovT9EgQquL5ERW2c6
