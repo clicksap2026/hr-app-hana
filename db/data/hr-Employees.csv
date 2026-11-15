@@ -1,0 +1,5 @@
+ID;firstName;lastName;email;userId;department;manager_ID
+a1b2c3d4-0000-4000-8000-000000000001;Carol;Mehta;carol@fbags.example;carol;HR;
+a1b2c3d4-0000-4000-8000-000000000002;Bob;Nair;bob@fbags.example;bob;Sales;
+a1b2c3d4-0000-4000-8000-000000000003;Alice;Rao;alice@fbags.example;alice;Sales;a1b2c3d4-0000-4000-8000-000000000002
+a1b2c3d4-0000-4000-8000-000000000004;David;Iyer;david@fbags.example;david;Sales;a1b2c3d4-0000-4000-8000-000000000002

@@ -1,0 +1,52 @@
+@server = http://localhost:4004
+@hr = {{server}}/odata/v4/hr
+
+### 1. Alice (Employee) sees only her own leave requests
+GET {{hr}}/LeaveRequests
+Authorization: Basic alice:alice
+
+### 2. Bob (Manager) sees all employees
+GET {{hr}}/Employees?$select=firstName,lastName,department
+Authorization: Basic bob:bob
+
+### 3. Alice creates a leave request (days is calculated for her)
+POST {{hr}}/LeaveRequests
+Authorization: Basic alice:alice
+Content-Type: application/json
+
+{
+  "employee_ID": "a1b2c3d4-0000-4000-8000-000000000003",
+  "startDate": "2027-01-12",
+  "endDate": "2027-01-14",
+  "reason": "Wedding in the family"
+}
+
+### 4. A wrong date is rejected (end before start)
+POST {{hr}}/LeaveRequests
+Authorization: Basic alice:alice
+Content-Type: application/json
+
+{
+  "employee_ID": "a1b2c3d4-0000-4000-8000-000000000003",
+  "startDate": "2027-02-10",
+  "endDate": "2027-02-08",
+  "reason": "Oops"
+}
+
+### 5. Alice tries to approve: 403 Forbidden
+POST {{hr}}/LeaveRequests(b1b2c3d4-0000-4000-8000-000000000001)/approve
+Authorization: Basic alice:alice
+Content-Type: application/json
+
+{}
+
+### 6. Bob (Manager) approves
+POST {{hr}}/LeaveRequests(b1b2c3d4-0000-4000-8000-000000000001)/approve
+Authorization: Basic bob:bob
+Content-Type: application/json
+
+{}
+
+### 7. Check the new status
+GET {{hr}}/LeaveRequests(b1b2c3d4-0000-4000-8000-000000000001)?$select=reason,status
+Authorization: Basic bob:bob
