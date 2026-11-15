@@ -2,6 +2,8 @@
 
 Project P5 of the clickERP live SAP CAP course (Units 7 and 8).
 
+Step-by-step guide: [guide.md](guide.md)
+
 A small HR app: employees and leave requests, with three roles.
 
 | User  | Password | Roles              | Can do                                   |
